@@ -20,7 +20,7 @@ class _MyAppState extends State<MyApp> {
       value: AuthService().user,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Color(0xFFF2309B)),
+        theme: ThemeData(primaryColor: Color(0xFF075E55)),
         home: LandingPage(),
       ),
     );
