@@ -52,13 +52,12 @@ class _GrpChatPageState extends State<GrpChatPage> {
         title: Row(
           children: <Widget>[
             CircleAvatar(
-              backgroundImage: NetworkImage(
-                  "http://juadmission.jdvu.ac.in/jums_exam/resources/images/julogo.png"),
+              child: Icon(Icons.person),
               radius: 23,
               backgroundColor: Colors.white,
             ),
             SizedBox(
-              width: 10,
+              width: 15,
             ),
             Text(widget.snapshot['name'])
           ],
@@ -73,7 +72,7 @@ class _GrpChatPageState extends State<GrpChatPage> {
               icon: Icon(Icons.call),
               onPressed: () async {
                 print(widget.senderUid);
-                
+
                 // await AuthService().signOut();
                 // Navigator.pop(context);
               }),
@@ -137,6 +136,7 @@ class _GrpChatPageState extends State<GrpChatPage> {
                         radius: 26,
                         child: IconButton(
                           onPressed: () async {
+                            _textController.clear();
                             await _db
                                 .collection('messages')
                                 .document(widget.senderUid)
@@ -157,7 +157,6 @@ class _GrpChatPageState extends State<GrpChatPage> {
                               'receiverID': receiveruid,
                               'timeStamp': FieldValue.serverTimestamp()
                             });
-                            _textController.clear();
                           },
                           icon: Icon(
                             Icons.send,
@@ -248,7 +247,7 @@ class _GrpChatPageState extends State<GrpChatPage> {
       snapshot['text'],
       style: TextStyle(
         color: Colors.white,
-        fontSize: 16.0,
+        fontSize: 18.0,
       ),
     );
   }

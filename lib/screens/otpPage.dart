@@ -1,7 +1,7 @@
 import 'package:S6Chat/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Test extends StatefulWidget {
   @override
@@ -14,11 +14,16 @@ class _TestState extends State<Test> {
   final formkey = GlobalKey<FormState>();
   bool smsSent = false;
   bool verComplete = false;
+  bool readonly = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text("Welcome")),
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text("Welcome"),
+        elevation: 0,
+      ),
       body: verComplete
           ? Center(
               child: CircularProgressIndicator(),
@@ -37,10 +42,11 @@ class _TestState extends State<Test> {
                   Form(
                     key: formkey,
                     child: Padding(
-                      padding: const EdgeInsets.all(20.0),
+                      padding: const EdgeInsets.all(30.0),
                       child: Column(
                         children: <Widget>[
                           TextFormField(
+                            readOnly: readonly,
                             decoration: InputDecoration(
                               labelText: "Name",
                             ),
@@ -52,6 +58,7 @@ class _TestState extends State<Test> {
                             },
                           ),
                           TextFormField(
+                            readOnly: readonly,
                             decoration: InputDecoration(labelText: "Phone"),
                             keyboardType: TextInputType.phone,
                             onChanged: (value) {
@@ -68,6 +75,7 @@ class _TestState extends State<Test> {
                                   style: TextStyle(color: Colors.white)),
                               onPressed: () {
                                 print(phone);
+                                readonly = false;
                                 verifyPhone(phone);
                               },
                             ),
@@ -106,6 +114,13 @@ class _TestState extends State<Test> {
     );
   }
 
+  void showToast() {
+    Fluttertoast.showToast(
+        msg: "OTP sent",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER);
+  }
+
   Future<void> verifyPhone(phoneNo) async {
     final PhoneVerificationCompleted verified = (AuthCredential authResult) {
       setState(() {
@@ -119,6 +134,7 @@ class _TestState extends State<Test> {
       print("${authException.message}");
     };
     final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
+      showToast();
       setState(() {
         this.smsSent = true;
       });

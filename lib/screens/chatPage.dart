@@ -19,29 +19,42 @@ class _ChatPageState extends State<ChatPage> {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             } else {
-              return ListView.separated(
-                  separatorBuilder: (context, index) => Divider(
-                        color: Colors.grey,
-                        thickness: 0.3,
-                      ),
+              return ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {},
-                      child: ListTile(
-                        onTap: () => Navigator.push(
+                    return Column(
+                      children: <Widget>[
+                        ListTile(
+                          onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => GrpChatPage(
-                                      senderUid: widget.senderUid,
-                                      snapshot: snapshot.data.documents[index],
-                                    ))),
-                        leading: CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: Icon(Icons.person),
+                              builder: (context) => GrpChatPage(
+                                senderUid: widget.senderUid,
+                                snapshot: snapshot.data.documents[index],
+                              ),
+                            ),
+                          ),
+                          enabled: true,
+                          leading: CircleAvatar(
+                            child: Icon(Icons.person),
+                            radius: 28,
+                            backgroundColor: Colors.black,
+                          ),
+                          title: Text(
+                            snapshot.data.documents[index]['name'],
+                            style: TextStyle(fontWeight: FontWeight.w600),
+                          ),
+                          subtitle: Text("New message"),
+                          trailing: Text(
+                            "7:24 PM",
+                            style: TextStyle(color: Colors.grey),
+                          ),
                         ),
-                        title: Text(snapshot.data.documents[index]['name']),
-                      ),
+                        Divider(
+                          height: 5,
+                          indent: 60,
+                        )
+                      ],
                     );
                   });
             }
