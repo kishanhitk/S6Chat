@@ -7,10 +7,19 @@ class AuthService {
 
   User _fromFirebaseUser(FirebaseUser user) {
     return user != null ? User(uid: user.uid) : null;
+    
   }
+  
+  Future<FirebaseUser> getCurrentUser() async {
+    FirebaseUser currentUser;
+    currentUser = await _auth.currentUser();
+    return currentUser;
+  }
+
 
   Stream<User> get user {
     return _auth.onAuthStateChanged.map(_fromFirebaseUser);
+    
   }
 
   signOut() {
@@ -20,12 +29,14 @@ class AuthService {
   signIn({AuthCredential authCredential, String name, String phoneNo}) async {
     AuthResult result = await _auth.signInWithCredential(authCredential);
     FirebaseUser user = result.user;
+    
     await DataBaseServices(uid: user.uid).createUserDatabase(name, phoneNo);
   }
 
   signInOTP(smsCode, verId, name, phoneNo) {
     AuthCredential authCredential = PhoneAuthProvider.getCredential(
         verificationId: verId, smsCode: smsCode);
+        
     signIn(authCredential: authCredential, name: name, phoneNo: phoneNo);
   }
 }

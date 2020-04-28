@@ -2,6 +2,7 @@ import 'package:S6Chat/services/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
+
 class Test extends StatefulWidget {
   @override
   _TestState createState() => _TestState();
@@ -12,74 +13,104 @@ String phone, verificationID, smsCode, name;
 class _TestState extends State<Test> {
   final formkey = GlobalKey<FormState>();
   bool smsSent = false;
+  bool verComplete = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(centerTitle: true, title: Text("TestPage")),
-      body: Container(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Form(
-              key: formkey,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Column(
-                  children: <Widget>[
-                    TextFormField(
-                      decoration: InputDecoration(labelText: "Name"),
-                      keyboardType: TextInputType.text,
-                      onChanged: (value) {
-                        setState(() {
-                          name = value;
-                        });
-                      },
-                    ),
-                    TextFormField(
-                      decoration: InputDecoration(labelText: "Phone"),
-                      keyboardType: TextInputType.phone,
-                      onChanged: (value) {
-                        setState(() {
-                          phone = "+91" + value;
-                        });
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: RaisedButton(
-                        child: smsSent ? Text("Verify") : Text("Login"),
-                        onPressed: () {
-                          print(phone);
-                          smsSent
-                              ? AuthService().signInOTP(
-                                  smsCode, verificationID, name, phone)
-                              : verifyPhone(phone);
-                        },
-                      ),
-                    ),
-                    smsSent
-                        ? TextFormField(
-                            keyboardType: TextInputType.number,
+      appBar: AppBar(centerTitle: true, title: Text("Welcome")),
+      body: verComplete
+          ? Center(
+              child: CircularProgressIndicator(),
+            )
+          : SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Image.asset('assets/banner.png'),
+                  ),
+                  Form(
+                    key: formkey,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: <Widget>[
+                          TextFormField(
+                            decoration: InputDecoration(
+                              labelText: "Name",
+                            ),
+                            keyboardType: TextInputType.text,
                             onChanged: (value) {
                               setState(() {
-                                smsCode = value;
+                                name = value;
                               });
                             },
-                          )
-                        : Container(),
-                  ],
-                ),
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(labelText: "Phone"),
+                            keyboardType: TextInputType.phone,
+                            onChanged: (value) {
+                              setState(() {
+                                phone = "+91" + value;
+                              });
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: RaisedButton(
+                              color: Color(0xEE075E55),
+                              child: Text("Send OTP",
+                                  style: TextStyle(color: Colors.white)),
+                              onPressed: () {
+                                print(phone);
+                                verifyPhone(phone);
+                              },
+                            ),
+                          ),
+                          smsSent
+                              ? TextFormField(
+                                  decoration:
+                                      InputDecoration(labelText: "Enter OTP"),
+                                  keyboardType: TextInputType.number,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      smsCode = value;
+                                    });
+                                  },
+                                )
+                              : Container(),
+                          smsSent
+                              ? RaisedButton(
+                                  color: Color(0xEE075E55),
+                                  child: Text("Verify OTP",
+                                      style: TextStyle(color: Colors.white)),
+                                  onPressed: () {
+                                    print(phone);
+                                    AuthService().signInOTP(
+                                        smsCode, verificationID, name, phone);
+                                  },
+                                )
+                              : Container(),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
     );
   }
 
   Future<void> verifyPhone(phoneNo) async {
     final PhoneVerificationCompleted verified = (AuthCredential authResult) {
+      setState(() {
+        this.verComplete = true;
+      });
       AuthService()
           .signIn(authCredential: authResult, name: name, phoneNo: phone);
     };

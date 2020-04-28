@@ -14,7 +14,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Center(
         child: StreamBuilder(
       stream: Firestore.instance
-          .collection('user')
+          .collection('users')
           .document(widget.uid)
           .snapshots(),
       builder: (context, snapshot) {
@@ -52,17 +52,11 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(
               height: 80,
             ),
-            Text(
+            Text (
               _doc['name'],
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text(
-                "Jadavpur University",
-                style: TextStyle(color: Colors.red, fontSize: 14),
-              ),
-            ),
+          
             Card()
           ],
         );

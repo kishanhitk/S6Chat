@@ -1,7 +1,11 @@
 import 'package:S6Chat/screens/GroupChatPage.dart';
+import 'package:S6Chat/screens/chatPage.dart';
 import 'package:S6Chat/screens/profilePage.dart';
 import 'package:S6Chat/services/auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class Dashboard extends StatefulWidget {
   final String uid;
@@ -11,10 +15,44 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  final FirebaseMessaging firebaseMessaging = new FirebaseMessaging();
+  @override
+  void initState() {
+    super.initState();
+    registerNotification();
+  }
+
+  void registerNotification() {
+    firebaseMessaging.requestNotificationPermissions();
+
+    firebaseMessaging.configure(onMessage: (Map<String, dynamic> message) {
+      print('onMessage: $message');
+      print(message['notification']);
+      return;
+    }, onResume: (Map<String, dynamic> message) {
+      print('onResume: $message');
+      return;
+    }, onLaunch: (Map<String, dynamic> message) {
+      print('onLaunch: $message');
+      return;
+    });
+
+    firebaseMessaging.getToken().then((token) {
+      print('token: $token');
+      Firestore.instance
+          .collection('users')
+          .document(widget.uid)
+          .updateData({'pushToken': token});
+    }).catchError((err) {
+      Fluttertoast.showToast(msg: err.message.toString());
+    });
+  }
+
   final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: 1,
       length: 4,
       child: Scaffold(
         floatingActionButton: CircleAvatar(
@@ -79,7 +117,11 @@ class _DashboardState extends State<Dashboard> {
                     ),
                   ),
                   PopupMenuItem(
-                    child: Text("Payments"),
+                    child: InkWell(
+                        onTap: () async {
+                          await _auth.signOut();
+                        },
+                        child: Text("Log Out")),
                   ),
                   PopupMenuItem(
                     child: Text("Settings"),
@@ -91,7 +133,9 @@ class _DashboardState extends State<Dashboard> {
         ),
         body: TabBarView(children: [
           Icon(Icons.chat),
-          Text(widget.uid),
+          ChatPage(
+            senderUid: widget.uid,
+          ),
           ProfilePage(
             uid: widget.uid,
           ),
