@@ -15,6 +15,7 @@ class _OtpPageState extends State<OtpPage> {
   bool smsSent = false;
   bool verComplete = false;
   bool readonly = false;
+  bool sendingOtp = false;
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _OtpPageState extends State<OtpPage> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
-                            readOnly: readonly,
+                          
                             decoration: InputDecoration(
                               labelText: "Name",
                             ),
@@ -58,7 +59,7 @@ class _OtpPageState extends State<OtpPage> {
                             },
                           ),
                           TextFormField(
-                            readOnly: readonly,
+                          
                             decoration: InputDecoration(labelText: "Phone"),
                             keyboardType: TextInputType.phone,
                             onChanged: (value) {
@@ -69,16 +70,33 @@ class _OtpPageState extends State<OtpPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: RaisedButton(
-                              color: Color(0xEE075E55),
-                              child: Text("Send OTP",
-                                  style: TextStyle(color: Colors.white)),
-                              onPressed: () {
-                                print(phone);
-                                readonly = false;
-                                verifyPhone(phone);
-                              },
-                            ),
+                            child: sendingOtp
+                                ? Container(
+                                    child: Column(
+                                      children: <Widget>[
+                                        CircularProgressIndicator(),
+                                        SizedBox(
+                                          height: 4,
+                                        ),
+                                        Text("Sending OTP.")
+                                      ],
+                                    ),
+                                  )
+                                : RaisedButton(
+                                    color: Color(0xEE075E55),
+                                    child: Text("Send OTP",
+                                        style: TextStyle(color: Colors.white)),
+                                    onPressed: () {
+                                      print(phone);
+                                      setState(() {
+                                        readonly = true;
+                                      });
+                                      verifyPhone(phone);
+                                      setState(() {
+                                        sendingOtp = true;
+                                      });
+                                    },
+                                  ),
                           ),
                           smsSent
                               ? TextFormField(
@@ -137,6 +155,7 @@ class _OtpPageState extends State<OtpPage> {
       _showToast();
       setState(() {
         this.smsSent = true;
+        this.sendingOtp = false;
       });
       print(forceResend);
 

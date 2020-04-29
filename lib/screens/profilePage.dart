@@ -42,17 +42,40 @@ class _ProfilePageState extends State<ProfilePage> {
                   top: 80,
                   left: 130,
                   right: 130,
-                  child: Align(
-                    child: CircleAvatar(
-                      backgroundColor: Colors.black12,
-                      backgroundImage: _doc['dpUrl'] == null
-                          ? AssetImage('assets/icon.png')
-                          : NetworkImage(_doc['dpUrl']),
-                      radius: 70,
+                  child: GestureDetector(
+                    onTap: () {
+                      print("object");
+                      showDialog(
+                        context: (context),
+                        builder: (BuildContext context) {
+                          return Hero(
+                            tag: "dp",
+                            child: Dialog(
+                                child:
+                                    CachedNetworkImage(imageUrl: _doc['dpUrl'])
+                                // Image.network(
+                                //   _doc['dpUrl'],
+                                // ),
+                                ),
+                          );
+                        },
+                      );
+                    },
+                    child: Align(
+                      child: Hero(
+                        tag: "dp",
+                        child: CircleAvatar(
+                          backgroundColor: Colors.black12,
+                          backgroundImage: _doc['dpUrl'] == null
+                              ? AssetImage('assets/icon.png')
+                              : NetworkImage(_doc['dpUrl']),
+                          radius: 70,
 
-                      // radius: 70,
-                      // backgroundImage: NetworkImage(_doc['dpUrl']),
-                      // backgroundColor: Color(0x662D78FF),
+                          // radius: 70,
+                          // backgroundImage: NetworkImage(_doc['dpUrl']),
+                          // backgroundColor: Color(0x662D78FF),
+                        ),
+                      ),
                     ),
                   ),
                 ),
