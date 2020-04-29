@@ -36,7 +36,7 @@ class _GrpChatListPageState extends State<GrpChatListPage> {
                     },
                     enabled: true,
                     leading: CircleAvatar(
-                      child: Icon(Icons.group),
+                      child: Image.asset("assets/splash.png"),
                       radius: 28,
                       backgroundColor: Colors.black,
                     ),

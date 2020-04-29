@@ -45,7 +45,7 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                   title: Row(
                     children: <Widget>[
                       CircleAvatar(
-                        child: Icon(Icons.group),
+                        child: Image.asset("assets/splash.png"),
                         radius: 23,
                         backgroundColor: Colors.white,
                       ),

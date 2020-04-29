@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:emoji_picker/emoji_picker.dart';
 
 class ChatScreen extends StatefulWidget {
   ChatScreen({this.snapshot, this.senderUid});
@@ -10,10 +11,31 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  FocusNode textFieldFocus = FocusNode();
+
+  bool isWriting = false;
+
+  bool showEmojiPicker = false;
   ScrollController _scrollController = ScrollController();
 
   _scrollToBottom() {
     _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+  }
+
+  showKeyboard() => textFieldFocus.requestFocus();
+
+  hideKeyboard() => textFieldFocus.unfocus();
+
+  hideEmojiContainer() {
+    setState(() {
+      showEmojiPicker = false;
+    });
+  }
+
+  showEmojiContainer() {
+    setState(() {
+      showEmojiPicker = true;
+    });
   }
 
   String receiveruid;
@@ -68,9 +90,6 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: Icon(Icons.call),
               onPressed: () async {
                 print(widget.senderUid);
-
-                // await AuthService().signOut();
-                // Navigator.pop(context);
               }),
           PopupMenuButton(
             itemBuilder: (BuildContext context) => [
@@ -99,13 +118,16 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: <Widget>[
                     Expanded(
                         child: TextField(
+                      focusNode: textFieldFocus,
                       onChanged: (value) {
                         setState(() {
                           text = value;
                         });
+                        print(text);
                       },
                       controller: _textController,
                       decoration: InputDecoration(
+                          hintText: "Enter your message here.",
                           fillColor: Colors.white,
                           filled: true,
                           focusedBorder: OutlineInputBorder(
@@ -118,10 +140,24 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           contentPadding:
                               EdgeInsets.symmetric(vertical: 7, horizontal: 5),
-                          prefixIcon: Icon(
-                            Icons.tag_faces,
-                            size: 28,
-                          ),
+                          prefixIcon: IconButton(
+                              // onPressed: () {
+                              //   print("Emozi");
+                              //   if (!showEmojiPicker) {
+                              //     hideKeyboard();
+                              //     showEmojiContainer();
+                              //   } else {
+                              //     showKeyboard();
+                              //     hideEmojiContainer();
+                              //   }
+                              // },
+                              onPressed: () => showEmojiPicker
+                                  ? hideEmojiContainer()
+                                  : showEmojiContainer(),
+                              icon: Icon(
+                                Icons.tag_faces,
+                                size: 28,
+                              )),
                           suffixIcon: Icon(Icons.attach_file)),
                     )),
                     Padding(
@@ -130,13 +166,12 @@ class _ChatScreenState extends State<ChatScreen> {
                         radius: 26,
                         child: IconButton(
                           onPressed: () async {
-                            _textController.clear();
                             await _db
                                 .collection('messages')
                                 .document(widget.senderUid)
                                 .collection(receiveruid)
                                 .add({
-                              'text': text,
+                              'text': _textController.text,
                               'senderID': widget.senderUid,
                               'receiverID': receiveruid,
                               'timeStamp': FieldValue.serverTimestamp()
@@ -151,6 +186,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               'receiverID': receiveruid,
                               'timeStamp': FieldValue.serverTimestamp()
                             });
+
+                            _textController.clear();
                           },
                           icon: Icon(
                             Icons.send,
@@ -164,9 +201,26 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
             ),
+            showEmojiPicker ? Container(child: emojiContainer()) : Container(),
           ],
         ),
       ),
+    );
+  }
+
+  emojiContainer() {
+    return EmojiPicker(
+      rows: 3,
+      columns: 7,
+      onEmojiSelected: (emoji, category) {
+        setState(() {
+          isWriting = true;
+        });
+
+        _textController.text = _textController.text + " " + emoji.emoji;
+      },
+      recommendKeywords: ["face", "happy", "party", "sad"],
+      numRecommended: 50,
     );
   }
 
@@ -199,7 +253,6 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   Widget chatMessageItem(DocumentSnapshot snapshot) {
-    print(snapshot.data);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       // child: Text(snapshot['text'])
@@ -246,13 +299,13 @@ class _ChatScreenState extends State<ChatScreen> {
             fontSize: 18.0,
           ),
         ),
-        Text(
-          snapshot['timeStamp'].toString(),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.0,
-          ),
-        ),
+        // Text(
+        //   snapshot['timeStamp'].toString(),
+        //   style: TextStyle(
+        //     color: Colors.white,
+        //     fontSize: 18.0,
+        //   ),
+        // ),
       ],
     );
   }
