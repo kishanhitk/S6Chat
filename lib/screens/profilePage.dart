@@ -2,6 +2,7 @@ import 'package:S6Chat/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid;
@@ -41,12 +42,13 @@ class _ProfilePageState extends State<ProfilePage> {
                   left: 130,
                   right: 130,
                   child: Align(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(50),
-                      child: Image.network(
-                        _doc['dpUrl'],
-                        fit: BoxFit.fill,
-                      ),
+                    child: CircleAvatar(
+                      backgroundColor: Colors.black12,
+                      backgroundImage: _doc['dpUrl'] == null
+                          ? AssetImage('assets/icon.png')
+                          : NetworkImage(_doc['dpUrl']),
+                      radius: 70,
+
                       // radius: 70,
                       // backgroundImage: NetworkImage(_doc['dpUrl']),
                       // backgroundColor: Color(0x662D78FF),
@@ -69,6 +71,29 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontSize: 15,
                   fontWeight: FontWeight.w100,
                   color: Colors.black45),
+            ),
+            SizedBox(height: 30),
+            RaisedButton(
+              color: Colors.green[400],
+              onPressed: () {
+              var img =  ImagePicker.pickImage(source: ImageSource.gallery);
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "Edit Profile",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.edit,
+                    color: Colors.white,
+                  )
+                ],
+              ),
             ),
             SizedBox(height: 30),
             RaisedButton(

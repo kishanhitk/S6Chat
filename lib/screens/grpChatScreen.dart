@@ -12,8 +12,6 @@ class GrpChatScreen extends StatefulWidget {
 class _GrpChatScreenState extends State<GrpChatScreen> {
   FocusNode textFieldFocus = FocusNode();
 
-  bool isWriting = false;
-
   bool showEmojiPicker = false;
   final _db = Firestore.instance;
   ScrollController _scrollController = ScrollController();
@@ -191,10 +189,6 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
       rows: 3,
       columns: 7,
       onEmojiSelected: (emoji, category) {
-        setState(() {
-          isWriting = true;
-        });
-
         _textController.text = _textController.text + " " + emoji.emoji;
       },
       recommendKeywords: ["face", "happy", "party", "sad"],
