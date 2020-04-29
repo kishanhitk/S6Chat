@@ -3,7 +3,7 @@ import 'package:S6Chat/screens/grpChatListPage.dart';
 import 'package:S6Chat/screens/profilePage.dart';
 import 'package:S6Chat/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluttertoast/fluttertoast.dart';

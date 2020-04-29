@@ -1,6 +1,7 @@
 import 'package:S6Chat/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid;
@@ -42,7 +43,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Align(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(50),
-                      child: Image.network(_doc['dpUrl'],fit: BoxFit.fill,),
+                      child: Image.network(
+                        _doc['dpUrl'],
+                        fit: BoxFit.fill,
+                      ),
                       // radius: 70,
                       // backgroundImage: NetworkImage(_doc['dpUrl']),
                       // backgroundColor: Color(0x662D78FF),

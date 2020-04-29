@@ -24,32 +24,35 @@ class _ChatPageState extends State<ChatPage> {
                   itemBuilder: (context, index) {
                     return Column(
                       children: <Widget>[
-                        ListTile(
-                          onTap: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ChatScreen(
-                                senderUid: widget.senderUid,
-                                snapshot: snapshot.data.documents[index],
+                        snapshot.data.documents[index]['uid'] ==
+                                widget.senderUid
+                            ? Container()
+                            : ListTile(
+                                onTap: () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ChatScreen(
+                                      senderUid: widget.senderUid,
+                                      snapshot: snapshot.data.documents[index],
+                                    ),
+                                  ),
+                                ),
+                                enabled: true,
+                                leading: CircleAvatar(
+                                  child: Icon(Icons.person),
+                                  radius: 28,
+                                  backgroundColor: Colors.black,
+                                ),
+                                title: Text(
+                                  snapshot.data.documents[index]['name'],
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: Text("New message"),
+                                trailing: Text(
+                                  "7:24 PM",
+                                  style: TextStyle(color: Colors.grey),
+                                ),
                               ),
-                            ),
-                          ),
-                          enabled: true,
-                          leading: CircleAvatar(
-                            child: Icon(Icons.person),
-                            radius: 28,
-                            backgroundColor: Colors.black,
-                          ),
-                          title: Text(
-                            snapshot.data.documents[index]['name'],
-                            style: TextStyle(fontWeight: FontWeight.w600),
-                          ),
-                          subtitle: Text("New message"),
-                          trailing: Text(
-                            "7:24 PM",
-                            style: TextStyle(color: Colors.grey),
-                          ),
-                        ),
                         Divider(
                           height: 5,
                           indent: 60,
