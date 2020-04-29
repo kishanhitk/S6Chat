@@ -1,3 +1,4 @@
+import 'package:S6Chat/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -52,12 +53,41 @@ class _ProfilePageState extends State<ProfilePage> {
             SizedBox(
               height: 80,
             ),
-            Text (
+            Text(
               _doc['name'],
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w300),
             ),
-          
-            Card()
+            SizedBox(height: 10),
+            Text(
+              _doc['phoneNo'],
+              style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w100,
+                  color: Colors.black45),
+            ),
+            SizedBox(height: 30),
+            RaisedButton(
+              color: Colors.red[400],
+              onPressed: () {
+                AuthService().signOut();
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Text(
+                    "Log Out",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  SizedBox(
+                    width: 5,
+                  ),
+                  Icon(
+                    Icons.exit_to_app,
+                    color: Colors.white,
+                  )
+                ],
+              ),
+            )
           ],
         );
       },

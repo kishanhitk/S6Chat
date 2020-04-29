@@ -20,6 +20,6 @@ class _LandingPageState extends State<LandingPage> {
         uid: user.uid,
       );
     else
-      return Test();
+      return OtpPage();
   }
 }

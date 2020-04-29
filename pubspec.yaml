@@ -25,6 +25,9 @@ dependencies:
   animated_splash: ^1.0.0
   flare_splash_screen: ^3.0.1
   google_fonts: ^1.0.0
+  camera: ^0.5.7+4
+  video_player: ^0.10.9+1
+  curved_navigation_bar: ^0.3.2
 
   cupertino_icons: ^0.1.3
 

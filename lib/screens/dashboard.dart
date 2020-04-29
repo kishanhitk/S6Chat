@@ -1,8 +1,9 @@
-import 'package:S6Chat/screens/GroupChatPage.dart';
 import 'package:S6Chat/screens/chatPage.dart';
+import 'package:S6Chat/screens/grpChatListPage.dart';
 import 'package:S6Chat/screens/profilePage.dart';
 import 'package:S6Chat/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -48,6 +49,13 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
+  void _showToast() {
+    Fluttertoast.showToast(
+        msg: "This feature is not ready yet.",
+        toastLength: Toast.LENGTH_LONG,
+        gravity: ToastGravity.CENTER);
+  }
+
   final _auth = AuthService();
   @override
   Widget build(BuildContext context) {
@@ -65,14 +73,13 @@ class _DashboardState extends State<Dashboard> {
                   size: 28,
                 ),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => GrpChatPage()));
+                  _showToast();
                 })),
         appBar: AppBar(
           bottom: TabBar(
             tabs: [
               Tab(
-                icon: Icon(Icons.camera_alt),
+                text: "GROUPS",
               ),
               Tab(
                 text: "CHAT",
@@ -85,7 +92,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             ],
           ),
-          title: Text("WhatsApp"),
+          title: Text("S6Chat"),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -132,108 +139,33 @@ class _DashboardState extends State<Dashboard> {
           ],
         ),
         body: TabBarView(children: [
-          Icon(Icons.chat),
+          GrpChatListPage(
+            senderUid: widget.uid,
+          ),
           ChatPage(
             senderUid: widget.uid,
           ),
           ProfilePage(
             uid: widget.uid,
           ),
-          Icon(Icons.chat),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(
+                Icons.phone_in_talk,
+                size: 100,
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  "Coming Soon",
+                  style: TextStyle(fontSize: 40, fontWeight: FontWeight.w100),
+                ),
+              ),
+            ],
+          ),
         ]),
       ),
     );
   }
 }
-
-// class ProfilePage extends StatefulWidget {
-//   @override
-//   _ProfilePageState createState() => _ProfilePageState();
-// }
-
-// class _ProfilePageState extends State<ProfilePage> {
-//   @override
-//   Widget build(BuildContext context) {
-//     return DefaultTabController(
-//       length: 4,
-//       child: Scaffold(
-//         floatingActionButton: CircleAvatar(
-//             backgroundColor: Color(0xFF25D366),
-//             radius: 28,
-//             child: IconButton(
-//                 icon: Icon(
-//                   Icons.message,
-//                   color: Colors.white,
-//                   size: 28,
-//                 ),
-//                 onPressed: () {})),
-//         appBar: AppBar(
-//           bottom: TabBar(
-//             tabs: [
-//               Tab(
-//                 icon: Icon(Icons.camera_alt),
-//               ),
-//               Tab(
-//                 text: "CHAT",
-//               ),
-//               Tab(
-//                 text: "STATUS",
-//               ),
-//               Tab(
-//                 text: "CALLS",
-//               ),
-//             ],
-//           ),
-//           title: Text("WhatsApp"),
-//           actions: <Widget>[
-//             Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: IconButton(
-//                 icon: Icon(
-//                   Icons.search,
-//                   size: 25,
-//                 ),
-//                 onPressed: () {},
-//               ),
-//             ),
-//             Padding(
-//               padding: const EdgeInsets.all(8.0),
-//               child: PopupMenuButton(
-//                 itemBuilder: (BuildContext context) => [
-//                   PopupMenuItem(
-//                     child: Text("New group"),
-//                   ),
-//                   PopupMenuItem(
-//                     child: Text("New broadcast"),
-//                   ),
-//                   PopupMenuItem(
-//                     child: Text("WhatsApp Web"),
-//                   ),
-//                   PopupMenuItem(
-//                     child: Padding(
-//                       padding: const EdgeInsets.only(right: 10.0),
-//                       child: Text("Starred messages"),
-//                     ),
-//                   ),
-//                   PopupMenuItem(
-//                     child: Text("Payments"),
-//                   ),
-//                   PopupMenuItem(
-//                     child: Text("Settings"),
-//                   ),
-//                 ],
-//               ),
-//             )
-//           ],
-//         ),
-//         body: TabBarView(children: [
-//           Icon(Icons.chat),
-//            Text(widget.uid),
-//           Icon(Icons.chat),
-//           Icon(Icons.chat),
-//         ]),
-//       ),
-//     );
-//     ;
-//   }
-// }

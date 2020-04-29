@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class Test extends StatefulWidget {
+class OtpPage extends StatefulWidget {
   @override
-  _TestState createState() => _TestState();
+  _OtpPageState createState() => _OtpPageState();
 }
 
 String phone, verificationID, smsCode, name;
 
-class _TestState extends State<Test> {
+class _OtpPageState extends State<OtpPage> {
   final formkey = GlobalKey<FormState>();
   bool smsSent = false;
   bool verComplete = false;
@@ -114,7 +114,7 @@ class _TestState extends State<Test> {
     );
   }
 
-  void showToast() {
+  void _showToast() {
     Fluttertoast.showToast(
         msg: "OTP sent",
         toastLength: Toast.LENGTH_LONG,
@@ -134,7 +134,7 @@ class _TestState extends State<Test> {
       print("${authException.message}");
     };
     final PhoneCodeSent smsSent = (String verId, [int forceResend]) {
-      showToast();
+      _showToast();
       setState(() {
         this.smsSent = true;
       });

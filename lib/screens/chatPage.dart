@@ -1,4 +1,4 @@
-import 'package:S6Chat/screens/GroupChatPage.dart';
+import 'package:S6Chat/screens/chatScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -28,7 +28,7 @@ class _ChatPageState extends State<ChatPage> {
                           onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => GrpChatPage(
+                              builder: (context) => ChatScreen(
                                 senderUid: widget.senderUid,
                                 snapshot: snapshot.data.documents[index],
                               ),

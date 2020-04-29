@@ -1,18 +1,15 @@
-import 'package:S6Chat/models/user.dart';
-import 'package:S6Chat/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-class GrpChatPage extends StatefulWidget {
-  GrpChatPage({this.snapshot, this.senderUid});
+class ChatScreen extends StatefulWidget {
+  ChatScreen({this.snapshot, this.senderUid});
   final String senderUid;
   final DocumentSnapshot snapshot;
   @override
-  _GrpChatPageState createState() => _GrpChatPageState();
+  _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _GrpChatPageState extends State<GrpChatPage> {
+class _ChatScreenState extends State<ChatScreen> {
   ScrollController _scrollController = ScrollController();
 
   _scrollToBottom() {
@@ -22,7 +19,6 @@ class _GrpChatPageState extends State<GrpChatPage> {
   String receiveruid;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     setState(() {
       receiveruid = widget.snapshot['uid'];
@@ -88,9 +84,7 @@ class _GrpChatPageState extends State<GrpChatPage> {
       body: Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-                image: NetworkImage(
-                    "https://www.setaswall.com/wp-content/uploads/2019/08/Whatsapp-Wallpaper-120.jpg"),
-                fit: BoxFit.cover)),
+                image: AssetImage("assets/wall.jpg"), fit: BoxFit.cover)),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.end,
           // crossAxisAlignment: CrossAxisAlignment.end,
@@ -243,12 +237,23 @@ class _GrpChatPageState extends State<GrpChatPage> {
   }
 
   getMessage(DocumentSnapshot snapshot) {
-    return Text(
-      snapshot['text'],
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 18.0,
-      ),
+    return Column(
+      children: <Widget>[
+        Text(
+          snapshot['text'],
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
+        ),
+        Text(
+          snapshot['timeStamp'].toString(),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.0,
+          ),
+        ),
+      ],
     );
   }
 

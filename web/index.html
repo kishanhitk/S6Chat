@@ -20,6 +20,32 @@
 </head>
 
 <body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-messaging.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-database.js"></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyA8cgoczSn2kBXhIAY3pgYyHgekRP8__yc",
+      authDomain: "s6-chat.firebaseapp.com",
+      databaseURL: "https://s6-chat.firebaseio.com",
+      projectId: "s6-chat",
+      storageBucket: "s6-chat.appspot.com",
+      messagingSenderId: "404945966170",
+      appId: "1:404945966170:web:a8488bb165195e7c973463",
+      measurementId: "G-4YH4S1PT29"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
@@ -31,17 +57,7 @@
     }
   </script>
   <script src="main.dart.js" type="application/javascript"></script>
-  <script src="/__/firebase/7.14.2/firebase-app.js"></script>
 
-  <!-- If you enabled Analytics in your project, add the Firebase SDK for Analytics -->
-  <script src="/__/firebase/7.14.2/firebase-analytics.js"></script>
-
-  <!-- Add Firebase products that you want to use -->
-  <script src="/__/firebase/7.14.2/firebase-auth.js"></script>
-  <script src="/__/firebase/7.14.2/firebase-firestore.js"></script>
-
-  <!-- Initialize Firebase -->
-  <script src="/__/firebase/init.js"></script>
 </body>
 
 </html>
