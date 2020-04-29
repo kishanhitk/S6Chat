@@ -38,11 +38,19 @@ class _ChatPageState extends State<ChatPage> {
                                   ),
                                 ),
                                 enabled: true,
-                                leading: CircleAvatar(
-                                  child: Icon(Icons.person),
-                                  radius: 28,
-                                  backgroundColor: Colors.black,
-                                ),
+                                leading: snapshot.data.documents[index]
+                                            ['dpUrl'] !=
+                                        null
+                                    ? CircleAvatar(
+                                        radius: 28,
+                                        backgroundImage: NetworkImage(snapshot
+                                            .data.documents[index]['dpUrl']),
+                                      )
+                                    : CircleAvatar(
+                                        child: Icon(Icons.person),
+                                        radius: 28,
+                                        backgroundColor: Colors.black,
+                                      ),
                                 title: Text(
                                   snapshot.data.documents[index]['name'],
                                   style: TextStyle(fontWeight: FontWeight.w600),

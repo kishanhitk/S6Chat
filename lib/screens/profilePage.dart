@@ -1,8 +1,10 @@
+import 'package:S6Chat/screens/profileEdit.dart';
 import 'package:S6Chat/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid;
@@ -28,11 +30,10 @@ class _ProfilePageState extends State<ProfilePage> {
               overflow: Overflow.visible,
               children: <Widget>[
                 Container(
-                  child: Image.network(
-                    "https://c4.wallpaperflare.com/wallpaper/410/867/750/vector-forest-sunset-forest-sunset-forest-wallpaper-thumb.jpg",
-                    scale: 1,
-                    fit: BoxFit.fill,
-                  ),
+                  child: CachedNetworkImage(
+                      fit: BoxFit.fill,
+                      imageUrl:
+                          "https://c4.wallpaperflare.com/wallpaper/410/867/750/vector-forest-sunset-forest-sunset-forest-wallpaper-thumb.jpg"),
                   height: MediaQuery.of(context).size.height / 5,
                   width: double.infinity,
                   color: Colors.transparent,
@@ -72,11 +73,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   fontWeight: FontWeight.w100,
                   color: Colors.black45),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             RaisedButton(
               color: Colors.green[400],
               onPressed: () {
-              var img =  ImagePicker.pickImage(source: ImageSource.gallery);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ProfileEditingPage(
+                      registeredName: _doc['name'],
+                    ),
+                  ),
+                );
+                //  var img =  ImagePicker.pickImage(source: ImageSource.gallery);
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -95,7 +104,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 5),
             RaisedButton(
               color: Colors.red[400],
               onPressed: () {
