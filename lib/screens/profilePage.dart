@@ -153,7 +153,62 @@ class _ProfilePageState extends State<ProfilePage> {
             RaisedButton(
               color: Colors.red[400],
               onPressed: () {
-                AuthService().signOut();
+                showDialog(
+                  context: (context),
+                  builder: (BuildContext context) {
+                    return Dialog(
+                        child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 15.0, horizontal: 25),
+                          child: FittedBox(
+                            child: Text(
+                              "Are you sure you want to log out?",
+                              style: TextStyle(fontSize: 25),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            RaisedButton(
+                              color: Colors.red,
+                              onPressed: () async {
+                                await AuthService().signOut();
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "YES",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                            RaisedButton(
+                              color: Colors.green,
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "NO",
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(height: 30)
+                      ],
+                    )
+                        // Image.network(
+                        //   _doc['dpUrl'],
+                        // ),
+                        );
+                  },
+                );
+                //AuthService().signOut();
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,
