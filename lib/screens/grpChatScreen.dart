@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:emoji_picker/emoji_picker.dart';
 import 'package:flutter/material.dart';
 
 class GrpChatScreen extends StatefulWidget {
@@ -9,11 +10,32 @@ class GrpChatScreen extends StatefulWidget {
 }
 
 class _GrpChatScreenState extends State<GrpChatScreen> {
+  FocusNode textFieldFocus = FocusNode();
+
+  bool isWriting = false;
+
+  bool showEmojiPicker = false;
   final _db = Firestore.instance;
   ScrollController _scrollController = ScrollController();
 
   _scrollToBottom() {
     _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+  }
+
+  showKeyboard() => textFieldFocus.requestFocus();
+
+  hideKeyboard() => textFieldFocus.unfocus();
+
+  hideEmojiContainer() {
+    setState(() {
+      showEmojiPicker = false;
+    });
+  }
+
+  showEmojiContainer() {
+    setState(() {
+      showEmojiPicker = true;
+    });
   }
 
   String text;
@@ -92,6 +114,7 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                             children: <Widget>[
                               Expanded(
                                   child: TextField(
+                                focusNode: textFieldFocus,
                                 onChanged: (value) {
                                   setState(() {
                                     text = value;
@@ -114,10 +137,14 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                                     ),
                                     contentPadding: EdgeInsets.symmetric(
                                         vertical: 7, horizontal: 5),
-                                    prefixIcon: Icon(
-                                      Icons.tag_faces,
-                                      size: 28,
-                                    ),
+                                    prefixIcon: IconButton(
+                                        onPressed: () => showEmojiPicker
+                                            ? hideEmojiContainer()
+                                            : showEmojiContainer(),
+                                        icon: Icon(
+                                          Icons.tag_faces,
+                                          size: 28,
+                                        )),
                                     suffixIcon: Icon(Icons.attach_file)),
                               )),
                               Padding(
@@ -126,16 +153,16 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                                   radius: 26,
                                   child: IconButton(
                                     onPressed: () async {
-                                      _textController.clear();
                                       await _db
                                           .collection('groupMessages')
                                           .add({
-                                        'text': text,
+                                        'text': _textController.text,
                                         'senderID': widget.senderUid,
                                         'senderName': _doc['name'],
                                         'timeStamp':
                                             FieldValue.serverTimestamp()
                                       });
+                                      _textController.clear();
                                     },
                                     icon: Icon(
                                       Icons.send,
@@ -144,16 +171,35 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                                   ),
                                   backgroundColor: Color(0xFF075E55),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),
                       ),
+                      showEmojiPicker
+                          ? Container(child: emojiContainer())
+                          : Container(),
                     ],
                   ),
                 ),
               );
             }));
+  }
+
+  emojiContainer() {
+    return EmojiPicker(
+      rows: 3,
+      columns: 7,
+      onEmojiSelected: (emoji, category) {
+        setState(() {
+          isWriting = true;
+        });
+
+        _textController.text = _textController.text + " " + emoji.emoji;
+      },
+      recommendKeywords: ["face", "happy", "party", "sad"],
+      numRecommended: 50,
+    );
   }
 
   Widget messageList() {

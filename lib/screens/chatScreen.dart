@@ -181,7 +181,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                 .document(receiveruid)
                                 .collection(widget.senderUid)
                                 .add({
-                              'text': text,
+                              'text': _textController.text,
                               'senderID': widget.senderUid,
                               'receiverID': receiveruid,
                               'timeStamp': FieldValue.serverTimestamp()

@@ -40,11 +40,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   left: 130,
                   right: 130,
                   child: Align(
-                    child: CircleAvatar(
-                      radius: 70,
-                      backgroundImage: NetworkImage(
-                          "https://scontent-bom1-1.xx.fbcdn.net/v/t1.0-9/s960x960/45403612_1016987948505521_8622775694356643840_o.jpg?_nc_cat=105&_nc_sid=85a577&_nc_ohc=a0Gy2k0WLJQAX-UwUcT&_nc_ht=scontent-bom1-1.xx&_nc_tp=7&oh=8509ef4671fe151791e72555ebd6ebb0&oe=5F02A6B1"),
-                      backgroundColor: Color(0x662D78FF),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(50),
+                      child: Image.network(_doc['dpUrl'],fit: BoxFit.fill,),
+                      // radius: 70,
+                      // backgroundImage: NetworkImage(_doc['dpUrl']),
+                      // backgroundColor: Color(0x662D78FF),
                     ),
                   ),
                 ),
