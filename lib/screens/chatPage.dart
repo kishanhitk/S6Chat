@@ -1,4 +1,5 @@
 import 'package:S6Chat/screens/chatScreen.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -41,10 +42,25 @@ class _ChatPageState extends State<ChatPage> {
                                 leading: snapshot.data.documents[index]
                                             ['dpUrl'] !=
                                         null
-                                    ? CircleAvatar(
-                                        radius: 28,
-                                        backgroundImage: NetworkImage(snapshot
-                                            .data.documents[index]['dpUrl']),
+                                    ? CachedNetworkImage(
+                                        imageUrl: snapshot.data.documents[index]
+                                            ['dpUrl'],
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          width: 56.0,
+                                          height: 56.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover),
+                                          ),
+                                        ),
+                                        placeholder: (context, url) =>
+                                            CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
                                       )
                                     : CircleAvatar(
                                         child: Icon(Icons.person),

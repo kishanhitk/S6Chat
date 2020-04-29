@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:emoji_picker/emoji_picker.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ChatScreen extends StatefulWidget {
   ChatScreen({this.snapshot, this.senderUid});
@@ -69,11 +70,47 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         title: Row(
           children: <Widget>[
-            CircleAvatar(
-              child: Icon(Icons.person),
-              radius: 23,
-              backgroundColor: Colors.white,
-            ),
+            widget.snapshot['dpUrl'] != null
+                ? InkWell(
+                    onTap: () {
+                      print("object");
+                      showDialog(
+                        context: (context),
+                        builder: (BuildContext context) {
+                          return Hero(
+                            tag: "dp",
+                            child: Dialog(
+                                child: CachedNetworkImage(
+                                    imageUrl: widget.snapshot['dpUrl'])
+                                // Image.network(
+                                //   _doc['dpUrl'],
+                                // ),
+                                ),
+                          );
+                        },
+                      );
+                    },
+                    child: CachedNetworkImage(
+                      imageUrl: widget.snapshot['dpUrl'],
+                      imageBuilder: (context, imageProvider) => Container(
+                        width: 46.0,
+                        height: 46.0,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: imageProvider, fit: BoxFit.cover),
+                        ),
+                      ),
+                      placeholder: (context, url) =>
+                          CircularProgressIndicator(),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    ),
+                  )
+                : CircleAvatar(
+                    child: Icon(Icons.person),
+                    radius: 23,
+                    backgroundColor: Colors.white,
+                  ),
             SizedBox(
               width: 15,
             ),

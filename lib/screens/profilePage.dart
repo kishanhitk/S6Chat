@@ -39,10 +39,19 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Colors.transparent,
                 ),
                 Positioned(
+                  top: 10,
+                  left: 10,
+                  right: 10,
+                  child: Container(
+                    height: 200,
+                    width: 2000,
+                  ),
+                ),
+                Positioned(
                   top: 80,
                   left: 130,
                   right: 130,
-                  child: GestureDetector(
+                  child: InkWell(
                     onTap: () {
                       print("object");
                       showDialog(
@@ -64,17 +73,30 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Align(
                       child: Hero(
                         tag: "dp",
-                        child: CircleAvatar(
-                          backgroundColor: Colors.black12,
-                          backgroundImage: _doc['dpUrl'] == null
-                              ? AssetImage('assets/icon.png')
-                              : NetworkImage(_doc['dpUrl']),
-                          radius: 70,
-
-                          // radius: 70,
-                          // backgroundImage: NetworkImage(_doc['dpUrl']),
-                          // backgroundColor: Color(0x662D78FF),
-                        ),
+                        child: _doc['dpUrl'] != null
+                            ? CachedNetworkImage(
+                                imageUrl: _doc['dpUrl'],
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  width: 140.0,
+                                  height: 140.0,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    image: DecorationImage(
+                                        image: imageProvider,
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                                placeholder: (context, url) =>
+                                    CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    Icon(Icons.error),
+                              )
+                            : CircleAvatar(
+                                backgroundColor: Colors.black12,
+                                backgroundImage: AssetImage('assets/icon.png'),
+                                radius: 70,
+                              ),
                       ),
                     ),
                   ),
