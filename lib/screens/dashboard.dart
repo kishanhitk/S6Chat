@@ -50,13 +50,6 @@ class _DashboardState extends State<Dashboard> {
     });
   }
 
-  void _showToast() {
-    Fluttertoast.showToast(
-        msg: "This feature is not ready yet.",
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.CENTER);
-  }
-
   final _auth = AuthService();
   @override
   Widget build(BuildContext context) {

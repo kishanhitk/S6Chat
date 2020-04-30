@@ -48,11 +48,10 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
-  @override
-  final _db = Firestore.instance;
-
   final _textController = TextEditingController();
   String text;
+  final _db = Firestore.instance;
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(

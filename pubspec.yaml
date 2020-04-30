@@ -17,17 +17,14 @@ dependencies:
   cloud_firestore: ^0.13.5
   firebase_storage: ^3.1.5
   fluttertoast: ^4.0.1
-  shared_preferences: ^0.5.7
+
   image_picker: ^0.6.5+2
   cached_network_image: ^2.1.0+1
-  intl: ^0.16.1
+
   firebase_messaging: ^6.0.13
-  animated_splash: ^1.0.0
-  flare_splash_screen: ^3.0.1
+
   google_fonts: ^1.0.0
-  camera: ^0.5.7+4
-  video_player: ^0.10.9+1
-  curved_navigation_bar: ^0.3.2
+
   emoji_picker: ^0.1.0
   flutter_image_compress: ^0.6.7
   path_provider: ^1.6.7

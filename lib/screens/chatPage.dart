@@ -11,6 +11,7 @@ class ChatPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatPage> {
+  final _db = Firestore.instance;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,6 +24,7 @@ class _ChatPageState extends State<ChatPage> {
               return ListView.builder(
                   itemCount: snapshot.data.documents.length,
                   itemBuilder: (context, index) {
+                    var a = snapshot.data.documents[index]['uid'];
                     return Column(
                       children: <Widget>[
                         snapshot.data.documents[index]['uid'] ==
@@ -57,7 +59,6 @@ class _ChatPageState extends State<ChatPage> {
                                                 fit: BoxFit.cover),
                                           ),
                                         ),
-                                        
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       )
@@ -70,7 +71,52 @@ class _ChatPageState extends State<ChatPage> {
                                   snapshot.data.documents[index]['name'],
                                   style: TextStyle(fontWeight: FontWeight.w600),
                                 ),
-                                subtitle: Text("New message"),
+                                subtitle: StreamBuilder(
+                                  stream: Firestore.instance
+                                      .collection('messages')
+                                      .document(a)
+                                      .collection(widget.senderUid)
+                                      .snapshots(),
+                                  builder: (context,
+                                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                                    if (snapshot.hasData) {
+                                      var docList = snapshot.data.documents;
+
+                                      if (docList.isNotEmpty) {
+                                        return SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.6,
+                                          child: Text(
+                                            docList.last['text'],
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontSize: 14,
+                                            ),
+                                          ),
+                                        );
+                                      }
+
+                                      return Text(
+                                        "No Message yet.",
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 14,
+                                        ),
+                                      );
+                                    }
+                                    return Text(
+                                      "..",
+                                      style: TextStyle(
+                                        color: Colors.grey,
+                                        fontSize: 14,
+                                      ),
+                                    );
+                                  },
+                                ),
                                 trailing: Text(
                                   "7:24 PM",
                                   style: TextStyle(color: Colors.grey),

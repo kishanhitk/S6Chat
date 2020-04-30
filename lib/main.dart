@@ -4,7 +4,7 @@ import 'package:S6Chat/services/auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:S6Chat/test.dart';
+
 
 void main() => runApp(MyApp());
 

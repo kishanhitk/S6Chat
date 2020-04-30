@@ -1,5 +1,4 @@
 import 'package:S6Chat/models/user.dart';
-import 'package:S6Chat/screens/userRegPage.dart';
 import 'package:S6Chat/screens/otpPage.dart';
 import 'package:S6Chat/screens/dashboard.dart';
 import 'package:provider/provider.dart';
