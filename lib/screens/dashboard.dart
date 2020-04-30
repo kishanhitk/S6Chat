@@ -8,6 +8,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Dashboard extends StatefulWidget {
   final String uid;
@@ -58,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
       length: 4,
       child: Scaffold(
         floatingActionButton: CircleAvatar(
-            backgroundColor: Color(0xFF25D366),
+            backgroundColor: Colors.black ?? Color(0xFF25D366),
             radius: 28,
             child: Hero(
               tag: "FAB",
@@ -82,6 +83,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             )),
         appBar: AppBar(
+          backgroundColor: Colors.black,
           bottom: TabBar(
             tabs: [
               Tab(
@@ -98,7 +100,16 @@ class _DashboardState extends State<Dashboard> {
               ),
             ],
           ),
-          title: Text("S6Chat"),
+          title: Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text("S6",
+                    style: GoogleFonts.parisienne(color: Colors.black)),
+              )),
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -110,38 +121,38 @@ class _DashboardState extends State<Dashboard> {
                 onPressed: () {},
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: PopupMenuButton(
-                itemBuilder: (BuildContext context) => [
-                  PopupMenuItem(
-                    child: Text("New group"),
-                  ),
-                  PopupMenuItem(
-                    child: Text("New broadcast"),
-                  ),
-                  PopupMenuItem(
-                    child: Text("WhatsApp Web"),
-                  ),
-                  PopupMenuItem(
-                    child: Padding(
-                      padding: const EdgeInsets.only(right: 10.0),
-                      child: Text("Starred messages"),
-                    ),
-                  ),
-                  PopupMenuItem(
-                    child: InkWell(
-                        onTap: () async {
-                          await _auth.signOut();
-                        },
-                        child: Text("Log Out")),
-                  ),
-                  PopupMenuItem(
-                    child: Text("Settings"),
-                  ),
-                ],
-              ),
-            )
+            // Padding(
+            //   padding: const EdgeInsets.all(8.0),
+            //   child: PopupMenuButton(
+            //     itemBuilder: (BuildContext context) => [
+            //       PopupMenuItem(
+            //         child: Text("New group"),
+            //       ),
+            //       PopupMenuItem(
+            //         child: Text("New broadcast"),
+            //       ),
+            //       PopupMenuItem(
+            //         child: Text("WhatsApp Web"),
+            //       ),
+            //       PopupMenuItem(
+            //         child: Padding(
+            //           padding: const EdgeInsets.only(right: 10.0),
+            //           child: Text("Starred messages"),
+            //         ),
+            //       ),
+            //       PopupMenuItem(
+            //         child: InkWell(
+            //             onTap: () async {
+            //               await _auth.signOut();
+            //             },
+            //             child: Text("Log Out")),
+            //       ),
+            //       PopupMenuItem(
+            //         child: Text("Settings"),
+            //       ),
+            //     ],
+            //   ),
+            // )
           ],
         ),
         body: TabBarView(children: [

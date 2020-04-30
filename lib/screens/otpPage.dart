@@ -47,7 +47,6 @@ class _OtpPageState extends State<OtpPage> {
                       child: Column(
                         children: <Widget>[
                           TextFormField(
-                          
                             decoration: InputDecoration(
                               labelText: "Name",
                             ),
@@ -59,7 +58,6 @@ class _OtpPageState extends State<OtpPage> {
                             },
                           ),
                           TextFormField(
-                          
                             decoration: InputDecoration(labelText: "Phone"),
                             keyboardType: TextInputType.phone,
                             onChanged: (value) {
@@ -83,7 +81,7 @@ class _OtpPageState extends State<OtpPage> {
                                     ),
                                   )
                                 : RaisedButton(
-                                    color: Color(0xEE075E55),
+                                    color: Colors.black ?? Color(0xEE075E55),
                                     child: Text("Send OTP",
                                         style: TextStyle(color: Colors.white)),
                                     onPressed: () {
@@ -112,7 +110,7 @@ class _OtpPageState extends State<OtpPage> {
                               : Container(),
                           smsSent
                               ? RaisedButton(
-                                  color: Color(0xEE075E55),
+                                  color: Colors.black ?? Color(0xEE075E55),
                                   child: Text("Verify OTP",
                                       style: TextStyle(color: Colors.white)),
                                   onPressed: () {

@@ -21,6 +21,9 @@ class _MyAppState extends State<MyApp> {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
+          appBarTheme: AppBarTheme(
+            color: Colors.black
+          ),
             primaryColor: Color(0xFF075E55),
             textTheme: GoogleFonts.latoTextTheme()),
         home: LandingPage(),

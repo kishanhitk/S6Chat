@@ -119,7 +119,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(height: 20),
             RaisedButton(
-              color: Colors.green[400],
+              color: Colors.black,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -150,7 +150,7 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             SizedBox(height: 5),
             RaisedButton(
-              color: Colors.red[400],
+              color: Colors.red[500],
               onPressed: () {
                 showDialog(
                   context: (context),

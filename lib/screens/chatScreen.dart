@@ -113,7 +113,11 @@ class _ChatScreenState extends State<ChatScreen> {
             SizedBox(
               width: 15,
             ),
-            Text(widget.snapshot['name'])
+            Expanded(
+                child: Text(
+              widget.snapshot['name'],
+              overflow: TextOverflow.fade,
+            ))
           ],
         ),
         actions: <Widget>[
@@ -137,9 +141,10 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/wall.jpg"), fit: BoxFit.cover)),
+        decoration: BoxDecoration(color: Colors.black26),
+        // decoration: BoxDecoration(
+        //     // image: DecorationImage(
+        //     //     image: AssetImage("assets/wall.jpg"), fit: BoxFit.cover)),
         child: Column(
           // mainAxisAlignment: MainAxisAlignment.end,
           // crossAxisAlignment: CrossAxisAlignment.end,
@@ -153,49 +158,50 @@ class _ChatScreenState extends State<ChatScreen> {
                 child: Row(
                   children: <Widget>[
                     Expanded(
-                        child: TextField(
-                      focusNode: textFieldFocus,
-                      onChanged: (value) {
-                        setState(() {
-                          text = value;
-                        });
-                        print(text);
-                      },
-                      controller: _textController,
-                      decoration: InputDecoration(
-                          hintText: "Enter your message here.",
-                          fillColor: Colors.white,
-                          filled: true,
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.white),
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 7, horizontal: 5),
-                          prefixIcon: IconButton(
-                              // onPressed: () {
-                              //   print("Emozi");
-                              //   if (!showEmojiPicker) {
-                              //     hideKeyboard();
-                              //     showEmojiContainer();
-                              //   } else {
-                              //     showKeyboard();
-                              //     hideEmojiContainer();
-                              //   }
-                              // },
-                              onPressed: () => showEmojiPicker
-                                  ? hideEmojiContainer()
-                                  : showEmojiContainer(),
-                              icon: Icon(
-                                Icons.tag_faces,
-                                size: 28,
-                              )),
-                          suffixIcon: Icon(Icons.attach_file)),
-                    )),
+                      child: TextField(
+                        focusNode: textFieldFocus,
+                        onChanged: (value) {
+                          setState(() {
+                            text = value;
+                          });
+                          print(text);
+                        },
+                        controller: _textController,
+                        decoration: InputDecoration(
+                            hintText: "Enter your message here.",
+                            fillColor: Colors.white,
+                            filled: true,
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.white),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 7, horizontal: 5),
+                            prefixIcon: IconButton(
+                                // onPressed: () {
+                                //   print("Emozi");
+                                //   if (!showEmojiPicker) {
+                                //     hideKeyboard();
+                                //     showEmojiContainer();
+                                //   } else {
+                                //     showKeyboard();
+                                //     hideEmojiContainer();
+                                //   }
+                                // },
+                                onPressed: () => showEmojiPicker
+                                    ? hideEmojiContainer()
+                                    : showEmojiContainer(),
+                                icon: Icon(
+                                  Icons.tag_faces,
+                                  size: 28,
+                                )),
+                            suffixIcon: Icon(Icons.attach_file)),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CircleAvatar(
@@ -210,7 +216,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               'text': _textController.text,
                               'senderID': widget.senderUid,
                               'receiverID': receiveruid,
-                              'timeStamp': FieldValue.serverTimestamp()
+                              'timeStamp': FieldValue.serverTimestamp(),
+                              'sentAt': DateTime.now()
                             });
                             await _db
                                 .collection('messages')
@@ -220,7 +227,8 @@ class _ChatScreenState extends State<ChatScreen> {
                               'text': _textController.text,
                               'senderID': widget.senderUid,
                               'receiverID': receiveruid,
-                              'timeStamp': FieldValue.serverTimestamp()
+                              'timeStamp': FieldValue.serverTimestamp(),
+                              'sentAt': DateTime.now()
                             });
 
                             _textController.clear();
@@ -230,7 +238,7 @@ class _ChatScreenState extends State<ChatScreen> {
                             color: Colors.white,
                           ),
                         ),
-                        backgroundColor: Color(0xFF075E55),
+                        backgroundColor: Colors.black ?? (0xFF075E55),
                       ),
                     )
                   ],
