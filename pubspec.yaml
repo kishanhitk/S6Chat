@@ -31,6 +31,7 @@ dependencies:
   emoji_picker: ^0.1.0
   flutter_image_compress: ^0.6.7
   path_provider: ^1.6.7
+  image_cropper: ^1.2.1
 
   cupertino_icons: ^0.1.3
 

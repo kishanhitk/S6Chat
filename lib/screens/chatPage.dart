@@ -57,8 +57,7 @@ class _ChatPageState extends State<ChatPage> {
                                                 fit: BoxFit.cover),
                                           ),
                                         ),
-                                        placeholder: (context, url) =>
-                                            CircularProgressIndicator(),
+                                        
                                         errorWidget: (context, url, error) =>
                                             Icon(Icons.error),
                                       )

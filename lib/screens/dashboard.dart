@@ -1,5 +1,6 @@
 import 'package:S6Chat/screens/chatPage.dart';
 import 'package:S6Chat/screens/grpChatListPage.dart';
+import 'package:S6Chat/screens/grpChatScreen.dart';
 import 'package:S6Chat/screens/profilePage.dart';
 import 'package:S6Chat/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -66,15 +67,27 @@ class _DashboardState extends State<Dashboard> {
         floatingActionButton: CircleAvatar(
             backgroundColor: Color(0xFF25D366),
             radius: 28,
-            child: IconButton(
-                icon: Icon(
-                  Icons.message,
-                  color: Colors.white,
-                  size: 28,
-                ),
-                onPressed: () {
-                  _showToast();
-                })),
+            child: Hero(
+              tag: "FAB",
+              child: Material(
+                color: Colors.transparent,
+                child: IconButton(
+                    icon: Icon(
+                      Icons.message,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => GrpChatScreen(
+                              senderUid: widget.uid,
+                            ),
+                          ));
+                    }),
+              ),
+            )),
         appBar: AppBar(
           bottom: TabBar(
             tabs: [

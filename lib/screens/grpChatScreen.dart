@@ -48,136 +48,143 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                 .snapshots(),
             builder: (context, snapshot) {
               final _doc = snapshot.data;
-              return Scaffold(
-                appBar: AppBar(
-                  leading: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.arrow_back,
-                        color: Colors.white,
+              return Hero(
+                tag: "FAB",
+                child: Material(
+                  child: Scaffold(
+                    appBar: AppBar(
+                      leading: Padding(
+                        padding: const EdgeInsets.only(left: 8.0),
+                        child: IconButton(
+                          icon: Icon(
+                            Icons.arrow_back,
+                            color: Colors.white,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                        ),
                       ),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ),
-                  title: Row(
-                    children: <Widget>[
-                      CircleAvatar(
-                        child: Image.asset("assets/splash.png"),
-                        radius: 23,
-                        backgroundColor: Colors.white,
+                      title: Row(
+                        children: <Widget>[
+                          CircleAvatar(
+                            child: Image.asset("assets/splash.png"),
+                            radius: 23,
+                            backgroundColor: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text("Group")
+                        ],
                       ),
-                      SizedBox(
-                        width: 15,
-                      ),
-                      Text("Group")
-                    ],
-                  ),
-                  actions: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.video_call),
-                      onPressed: () {},
-                    ),
-                    IconButton(
-                        icon: Icon(Icons.call),
-                        onPressed: () async {
-                          print(widget.senderUid);
+                      actions: <Widget>[
+                        IconButton(
+                          icon: Icon(Icons.video_call),
+                          onPressed: () {},
+                        ),
+                        IconButton(
+                            icon: Icon(Icons.call),
+                            onPressed: () async {
+                              print(widget.senderUid);
 
-                          // await AuthService().signOut();
-                          // Navigator.pop(context);
-                        }),
-                    PopupMenuButton(
-                      itemBuilder: (BuildContext context) => [
-                        PopupMenuItem(
-                          child: Text("Group Info"),
+                              // await AuthService().signOut();
+                              // Navigator.pop(context);
+                            }),
+                        PopupMenuButton(
+                          itemBuilder: (BuildContext context) => [
+                            PopupMenuItem(
+                              child: Text("Group Info"),
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-                body: Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(
-                          image: AssetImage("assets/wall.jpg"),
-                          fit: BoxFit.cover)),
-                  child: Column(
-                    children: <Widget>[
-                      Flexible(child: messageList()),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Form(
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                  child: TextField(
-                                focusNode: textFieldFocus,
-                                onChanged: (value) {
-                                  setState(() {
-                                    text = value;
-                                  });
-                                },
-                                controller: _textController,
-                                decoration: InputDecoration(
-                                    hintText: "Enter your message here.",
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    focusedBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderSide:
-                                          BorderSide(color: Colors.white),
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 7, horizontal: 5),
-                                    prefixIcon: IconButton(
-                                        onPressed: () => showEmojiPicker
-                                            ? hideEmojiContainer()
-                                            : showEmojiContainer(),
-                                        icon: Icon(
-                                          Icons.tag_faces,
-                                          size: 28,
-                                        )),
-                                    suffixIcon: Icon(Icons.attach_file)),
-                              )),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CircleAvatar(
-                                  radius: 26,
-                                  child: IconButton(
-                                    onPressed: () async {
-                                      await _db
-                                          .collection('groupMessages')
-                                          .add({
-                                        'text': _textController.text,
-                                        'senderID': widget.senderUid,
-                                        'senderName': _doc['name'],
-                                        'timeStamp':
-                                            FieldValue.serverTimestamp()
+                    body: Container(
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage("assets/wall.jpg"),
+                              fit: BoxFit.cover)),
+                      child: Column(
+                        children: <Widget>[
+                          Flexible(child: messageList()),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Form(
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                      child: TextField(
+                                    focusNode: textFieldFocus,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        text = value;
                                       });
-                                      _textController.clear();
                                     },
-                                    icon: Icon(
-                                      Icons.send,
-                                      color: Colors.white,
+                                    controller: _textController,
+                                    decoration: InputDecoration(
+                                        hintText: "Enter your message here.",
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide:
+                                              BorderSide(color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                        ),
+                                        contentPadding: EdgeInsets.symmetric(
+                                            vertical: 7, horizontal: 5),
+                                        prefixIcon: IconButton(
+                                            onPressed: () => showEmojiPicker
+                                                ? hideEmojiContainer()
+                                                : showEmojiContainer(),
+                                            icon: Icon(
+                                              Icons.tag_faces,
+                                              size: 28,
+                                            )),
+                                        suffixIcon: Icon(Icons.attach_file)),
+                                  )),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: CircleAvatar(
+                                      radius: 26,
+                                      child: IconButton(
+                                        onPressed: () async {
+                                          await _db
+                                              .collection('groupMessages')
+                                              .add({
+                                            'text': _textController.text,
+                                            'senderID': widget.senderUid,
+                                            'senderName': _doc['name'],
+                                            'timeStamp':
+                                                FieldValue.serverTimestamp()
+                                          });
+                                          _textController.clear();
+                                        },
+                                        icon: Icon(
+                                          Icons.send,
+                                          color: Colors.white,
+                                        ),
+                                      ),
+                                      backgroundColor: Color(0xFF075E55),
                                     ),
                                   ),
-                                  backgroundColor: Color(0xFF075E55),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                          showEmojiPicker
+                              ? Container(child: emojiContainer())
+                              : Container(),
+                        ],
                       ),
-                      showEmojiPicker
-                          ? Container(child: emojiContainer())
-                          : Container(),
-                    ],
+                    ),
                   ),
                 ),
               );
