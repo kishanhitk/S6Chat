@@ -1,7 +1,9 @@
+import 'package:S6Chat/models/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:emoji_picker/emoji_picker.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:provider/provider.dart';
 
 class ChatScreen extends StatefulWidget {
   ChatScreen({this.snapshot, this.senderUid});
@@ -40,10 +42,12 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   String receiveruid;
+  String receiverToken;
   @override
   void initState() {
     super.initState();
     setState(() {
+      receiverToken = widget.snapshot['pushToken'];
       receiveruid = widget.snapshot['uid'];
     });
   }
@@ -53,6 +57,8 @@ class _ChatScreenState extends State<ChatScreen> {
   final _db = Firestore.instance;
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User>(context);
+ 
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -219,7 +225,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               'senderID': widget.senderUid,
                               'receiverID': receiveruid,
                               'timeStamp': FieldValue.serverTimestamp(),
-                              'sentAt': DateTime.now()
+                              'receiverToken': receiverToken
                             });
                             await _db
                                 .collection('messages')
@@ -230,7 +236,7 @@ class _ChatScreenState extends State<ChatScreen> {
                               'senderID': widget.senderUid,
                               'receiverID': receiveruid,
                               'timeStamp': FieldValue.serverTimestamp(),
-                              'sentAt': DateTime.now()
+                              'receiverToken': receiverToken
                             });
 
                             _textController.clear();
