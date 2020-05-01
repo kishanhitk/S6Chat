@@ -55,12 +55,13 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0,
         leading: Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: IconButton(
             icon: Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color: Colors.black,
             ),
             onPressed: () {
               Navigator.pop(context);
@@ -116,6 +117,7 @@ class _ChatScreenState extends State<ChatScreen> {
             Expanded(
                 child: Text(
               widget.snapshot['name'],
+              style: TextStyle(color: Colors.black),
               overflow: TextOverflow.fade,
             ))
           ],
@@ -141,7 +143,7 @@ class _ChatScreenState extends State<ChatScreen> {
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(color: Colors.black26),
+        decoration: BoxDecoration(color: Colors.white),
         // decoration: BoxDecoration(
         //     // image: DecorationImage(
         //     //     image: AssetImage("assets/wall.jpg"), fit: BoxFit.cover)),
@@ -169,7 +171,7 @@ class _ChatScreenState extends State<ChatScreen> {
                         controller: _textController,
                         decoration: InputDecoration(
                             hintText: "Enter your message here.",
-                            fillColor: Colors.white,
+                            fillColor: Colors.black12,
                             filled: true,
                             focusedBorder: OutlineInputBorder(
                               borderSide: BorderSide(color: Colors.white),
@@ -238,7 +240,8 @@ class _ChatScreenState extends State<ChatScreen> {
                             color: Colors.white,
                           ),
                         ),
-                        backgroundColor: Colors.black ?? (0xFF075E55),
+                        backgroundColor:
+                            Color(0xFF157AE1) ?? Colors.black ?? (0xFF075E55),
                       ),
                     )
                   ],
@@ -319,7 +322,7 @@ class _ChatScreenState extends State<ChatScreen> {
       constraints:
           BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
       decoration: BoxDecoration(
-        color: Colors.green,
+        color: Color(0xFF157AE1),
         borderRadius: BorderRadius.only(
           topLeft: messageRadius,
           topRight: messageRadius,
@@ -339,7 +342,9 @@ class _ChatScreenState extends State<ChatScreen> {
         Text(
           snapshot['text'],
           style: TextStyle(
-            color: Colors.white,
+            color: snapshot['senderID'] == widget.senderUid
+                ? Colors.white
+                : Colors.black,
             fontSize: 18.0,
           ),
         ),
@@ -362,7 +367,7 @@ class _ChatScreenState extends State<ChatScreen> {
       constraints:
           BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
       decoration: BoxDecoration(
-        color: Colors.red,
+        color: Colors.black12,
         borderRadius: BorderRadius.only(
           bottomRight: messageRadius,
           topRight: messageRadius,

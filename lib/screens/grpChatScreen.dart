@@ -53,12 +53,13 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                 child: Material(
                   child: Scaffold(
                     appBar: AppBar(
+                      elevation: 0,
                       leading: Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: IconButton(
                           icon: Icon(
                             Icons.arrow_back,
-                            color: Colors.white,
+                            color: Colors.black,
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -75,7 +76,10 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                           SizedBox(
                             width: 15,
                           ),
-                          Text("Group")
+                          Text(
+                            "Group",
+                            style: TextStyle(color: Colors.black),
+                          )
                         ],
                       ),
                       // actions: <Widget>[
@@ -101,7 +105,7 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                       // ],
                     ),
                     body: Container(
-                      decoration: BoxDecoration(color: Colors.black26),
+                      decoration: BoxDecoration(color: Colors.white),
                       child: Column(
                         children: <Widget>[
                           Flexible(child: messageList()),
@@ -121,7 +125,7 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                                     controller: _textController,
                                     decoration: InputDecoration(
                                         hintText: "Enter your message here.",
-                                        fillColor: Colors.white,
+                                        fillColor: Colors.black12,
                                         filled: true,
                                         focusedBorder: OutlineInputBorder(
                                           borderSide:
@@ -169,7 +173,8 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      backgroundColor: Color(0xFF075E55),
+                                      backgroundColor: Color(0xFF157AE1) ??
+                                          Color(0xFF075E55),
                                     ),
                                   ),
                                 ],
@@ -195,7 +200,7 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
       onEmojiSelected: (emoji, category) {
         _textController.text = _textController.text + " " + emoji.emoji;
       },
-      recommendKeywords: ["face", "happy", "party", "sad"],
+      // recommendKeywords: ["face", "happy", "party", "sad"],
       numRecommended: 50,
     );
   }
@@ -227,7 +232,6 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
   }
 
   Widget chatMessageItem(DocumentSnapshot snapshot) {
-    print(snapshot.data);
     return Container(
       margin: EdgeInsets.symmetric(vertical: 15),
       // child: Text(snapshot['text'])
@@ -250,7 +254,7 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
       constraints:
           BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
       decoration: BoxDecoration(
-        color: Colors.green,
+        color: Color(0xFF157AE1),
         borderRadius: BorderRadius.only(
           topLeft: messageRadius,
           topRight: messageRadius,
@@ -266,20 +270,24 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
 
   getMessage(DocumentSnapshot snapshot) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Text(
           snapshot['senderName'].toString(),
           style: TextStyle(
-            color: Colors.black45,
+            color: snapshot['senderID'] == widget.senderUid
+                ? Colors.white54
+                : Colors.black54,
             fontSize: 13.0,
           ),
         ),
         Text(
           snapshot['text'],
           style: TextStyle(
-            color: Colors.white,
+            color: snapshot['senderID'] == widget.senderUid
+                ? Colors.white
+                : Colors.black,
             fontSize: 18.0,
           ),
         ),
@@ -295,7 +303,7 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
       constraints:
           BoxConstraints(maxWidth: MediaQuery.of(context).size.width * 0.65),
       decoration: BoxDecoration(
-        color: Colors.red,
+        color: Colors.black12,
         borderRadius: BorderRadius.only(
           bottomRight: messageRadius,
           topRight: messageRadius,

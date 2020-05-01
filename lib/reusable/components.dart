@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 class Buttons extends StatelessWidget {
   final Function onTap;
   final String text;
+  final IconData icon;
   final Color buttonColor;
-  Buttons({this.onTap, this.buttonColor, this.text});
+  Buttons({this.onTap, this.buttonColor, this.text, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +28,21 @@ class Buttons extends StatelessWidget {
               borderRadius: BorderRadius.circular(50)),
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 19),
-            child:
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
                 Text(text, style: TextStyle(color: Colors.white, fontSize: 20)),
+                SizedBox(
+                  width: 5,
+                ),
+                Icon(
+                  icon,
+                  color: Colors.white,
+                  size: 20,
+                )
+              ],
+            ),
           ),
         ),
         onTap: onTap);

@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:S6Chat/models/cloud_storage_result.dart';
 import 'package:S6Chat/models/user.dart';
+import 'package:S6Chat/reusable/components.dart';
 import 'package:S6Chat/services/cloud_storage.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -49,10 +50,9 @@ class _ProfileEditingPageState extends State<ProfileEditingPage> {
 
   Future<void> _cropImage(File file) async {
     File cropped = await ImageCropper.cropImage(
-      androidUiSettings: AndroidUiSettings(
-        toolbarTitle: "Crop Image"
-      ),
-        sourcePath: file.absolute.path, cropStyle: CropStyle.circle);
+        androidUiSettings: AndroidUiSettings(toolbarTitle: "Crop Image"),
+        sourcePath: file.absolute.path,
+        cropStyle: CropStyle.circle);
     setState(() {
       file = cropped ?? file;
       selectedImage = cropped;
@@ -65,8 +65,19 @@ class _ProfileEditingPageState extends State<ProfileEditingPage> {
     final user = Provider.of<User>(context);
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            icon: Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
         centerTitle: true,
-        title: Text("Edit Profile"),
+        title: Text(
+          "Edit Profile",
+          style: TextStyle(color: Colors.black),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -120,9 +131,11 @@ class _ProfileEditingPageState extends State<ProfileEditingPage> {
                     hintText: widget.registeredName, hintStyle: TextStyle()),
               ),
             ),
-            RaisedButton(
-              color: Colors.green[300],
-              onPressed: () async {
+            Buttons(
+              buttonColor: Colors.green[400],
+              text: "Save",
+              icon: Icons.check,
+              onTap: () async {
                 if (selectedImage != null) {
                   setState(() {
                     uploading = true;
@@ -151,20 +164,6 @@ class _ProfileEditingPageState extends State<ProfileEditingPage> {
                     .updateData({"name": newname});
                 Navigator.pop(context);
               },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    "Save",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(width: 5),
-                  Icon(
-                    Icons.check,
-                    color: Colors.white,
-                  )
-                ],
-              ),
             ),
             SizedBox(height: 20),
             uploading

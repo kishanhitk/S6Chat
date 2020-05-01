@@ -1,9 +1,11 @@
+import 'package:S6Chat/reusable/components.dart';
 import 'package:S6Chat/screens/profileEdit.dart';
 import 'package:S6Chat/services/auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ProfilePage extends StatefulWidget {
   final String uid;
@@ -103,11 +105,14 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
             SizedBox(
-              height: 80,
+              height: 70,
             ),
             Text(
               _doc['name'],
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.w300),
+              style: GoogleFonts.roboto(
+                fontSize: 40
+              ),
+              // style: TextStyle(fontSize: 40, fontWeight: FontWeight.w300, ),
             ),
             SizedBox(height: 10),
             Text(
@@ -118,9 +123,8 @@ class _ProfilePageState extends State<ProfilePage> {
                   color: Colors.black45),
             ),
             SizedBox(height: 20),
-            RaisedButton(
-              color: Colors.black,
-              onPressed: () {
+            Buttons(
+              onTap: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -131,27 +135,15 @@ class _ProfilePageState extends State<ProfilePage> {
                 );
                 //  var img =  ImagePicker.pickImage(source: ImageSource.gallery);
               },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    "Edit Profile",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
-                    Icons.edit,
-                    color: Colors.white,
-                  )
-                ],
-              ),
+              text: "Edit Profile",
+              buttonColor: Colors.black,
+              icon: Icons.edit,
             ),
-            SizedBox(height: 5),
-            RaisedButton(
-              color: Colors.red[500],
-              onPressed: () {
+            SizedBox(height: 10),
+            Buttons(
+              text: "Log out",
+              buttonColor: Colors.red[500],
+              onTap: () {
                 showDialog(
                   context: (context),
                   builder: (BuildContext context) {
@@ -175,26 +167,22 @@ class _ProfilePageState extends State<ProfilePage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: <Widget>[
-                            RaisedButton(
-                              color: Colors.red,
-                              onPressed: () async {
+                            Buttons(
+                              icon: Icons.check_circle_outline,
+                              text: "YES",
+                              buttonColor: Colors.red,
+                              onTap: () async {
                                 await AuthService().signOut();
                                 Navigator.pop(context);
                               },
-                              child: Text(
-                                "YES",
-                                style: TextStyle(color: Colors.white),
-                              ),
                             ),
-                            RaisedButton(
-                              color: Colors.green,
-                              onPressed: () {
+                            Buttons(
+                              buttonColor: Colors.green,
+                              onTap: () {
                                 Navigator.pop(context);
                               },
-                              child: Text(
-                                "NO",
-                                style: TextStyle(color: Colors.white),
-                              ),
+                              text: "NO",
+                              icon: Icons.remove_circle_outline,
                             )
                           ],
                         ),
@@ -209,23 +197,8 @@ class _ProfilePageState extends State<ProfilePage> {
                 );
                 //AuthService().signOut();
               },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  Text(
-                    "Log Out",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Icon(
-                    Icons.exit_to_app,
-                    color: Colors.white,
-                  )
-                ],
-              ),
-            )
+              icon: Icons.exit_to_app,
+            ),
           ],
         );
       },

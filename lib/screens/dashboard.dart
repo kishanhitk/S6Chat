@@ -59,7 +59,7 @@ class _DashboardState extends State<Dashboard> {
       length: 4,
       child: Scaffold(
         floatingActionButton: CircleAvatar(
-            backgroundColor: Colors.black ?? Color(0xFF25D366),
+            backgroundColor:  Color(0xFF157AE1)??Colors.black ?? Color(0xFF25D366),
             radius: 28,
             child: Hero(
               tag: "FAB",
@@ -83,7 +83,7 @@ class _DashboardState extends State<Dashboard> {
               ),
             )),
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Color(0xFF6548D1) ?? Colors.black,
           bottom: TabBar(
             tabs: [
               Tab(
