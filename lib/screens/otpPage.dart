@@ -22,11 +22,7 @@ class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text("Welcome"),
-        elevation: 0,
-      ),
+
       body: verComplete
           ? Center(
               child: CircularProgressIndicator(),
@@ -97,6 +93,7 @@ class _OtpPageState extends State<OtpPage> {
                                 : smsSent
                                     ? Container()
                                     : Buttons(
+                                      icon: Icons.arrow_forward_ios,
                                         buttonColor:
                                             Colors.black ?? Color(0xEE075E55),
                                         text: "Send OTP",
@@ -129,6 +126,7 @@ class _OtpPageState extends State<OtpPage> {
                           ),
                           smsSent
                               ? Buttons(
+                                icon: Icons.verified_user,
                                   buttonColor:
                                       Colors.black ?? Color(0xEE075E55),
                                   text: "Verify OTP",

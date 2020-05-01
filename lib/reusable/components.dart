@@ -33,9 +33,9 @@ class Buttons extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
                 Text(text, style: TextStyle(color: Colors.white, fontSize: 20)),
-                SizedBox(
+               icon!=null? SizedBox(
                   width: 5,
-                ),
+                ):SizedBox(),
                 Icon(
                   icon,
                   color: Colors.white,
