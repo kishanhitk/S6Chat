@@ -78,33 +78,30 @@ class _GrpChatScreenState extends State<GrpChatScreen> {
                           Text("Group")
                         ],
                       ),
-                      actions: <Widget>[
-                        IconButton(
-                          icon: Icon(Icons.video_call),
-                          onPressed: () {},
-                        ),
-                        IconButton(
-                            icon: Icon(Icons.call),
-                            onPressed: () async {
-                              print(widget.senderUid);
+                      // actions: <Widget>[
+                      //   IconButton(
+                      //     icon: Icon(Icons.video_call),
+                      //     onPressed: () {},
+                      //   ),
+                      //   IconButton(
+                      //       icon: Icon(Icons.call),
+                      //       onPressed: () async {
+                      //         print(widget.senderUid);
 
-                              // await AuthService().signOut();
-                              // Navigator.pop(context);
-                            }),
-                        PopupMenuButton(
-                          itemBuilder: (BuildContext context) => [
-                            PopupMenuItem(
-                              child: Text("Group Info"),
-                            ),
-                          ],
-                        ),
-                      ],
+                      //         // await AuthService().signOut();
+                      //         // Navigator.pop(context);
+                      //       }),
+                      //   PopupMenuButton(
+                      //     itemBuilder: (BuildContext context) => [
+                      //       PopupMenuItem(
+                      //         child: Text("Group Info"),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ],
                     ),
                     body: Container(
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage("assets/wall.jpg"),
-                              fit: BoxFit.cover)),
+                      decoration: BoxDecoration(color: Colors.black26),
                       child: Column(
                         children: <Widget>[
                           Flexible(child: messageList()),
