@@ -1,4 +1,4 @@
-package com.example.S6Chat
+package com.kishans.s6chat
 
 import io.flutter.embedding.android.FlutterActivity
 

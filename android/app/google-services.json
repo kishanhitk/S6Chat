@@ -42,6 +42,43 @@
           ]
         }
       }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404945966170:android:45fbd05ebdba1098973463",
+        "android_client_info": {
+          "package_name": "com.kishans.s6chat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404945966170-173bqj885n5bl0v3rc9ciopp7850upm2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kishans.s6chat",
+            "certificate_hash": "17033d5ff73b3504c5ab7f7018833b0e2f930021"
+          }
+        },
+        {
+          "client_id": "404945966170-qb3ei25aju7t5vjsdd962ucns89kvq0s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx0RtVl8uqKyqRmbA671LXpDiTJ75orlA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "404945966170-qb3ei25aju7t5vjsdd962ucns89kvq0s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
     }
   ],
   "configuration_version": "1"

@@ -1,6 +1,7 @@
 import 'package:S6Chat/reusable/components.dart';
 import 'package:S6Chat/reusable/constants.dart';
 import 'package:S6Chat/services/auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -93,7 +94,7 @@ class _OtpPageState extends State<OtpPage> {
                                 : smsSent
                                     ? Container()
                                     : Buttons(
-                                      icon: Icons.arrow_forward_ios,
+                                      icon: CupertinoIcons.forward,
                                         buttonColor:
                                             Colors.black ?? Color(0xEE075E55),
                                         text: "Send OTP",
