@@ -1,4 +1,5 @@
 # S6Chat
+[![Codemagic build status](https://api.codemagic.io/apps/5ecf0ed77094ed184486ce50/5ecf0ed77094ed184486ce4f/status_badge.svg)](https://codemagic.io/apps/5ecf0ed77094ed184486ce50/5ecf0ed77094ed184486ce4f/latest_build)
 
 A new Flutter project.
 
