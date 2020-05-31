@@ -23,7 +23,6 @@ class _OtpPageState extends State<OtpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: verComplete
           ? Center(
               child: CircularProgressIndicator(),
@@ -94,7 +93,7 @@ class _OtpPageState extends State<OtpPage> {
                                 : smsSent
                                     ? Container()
                                     : Buttons(
-                                      icon: CupertinoIcons.forward,
+                                        icon: CupertinoIcons.forward,
                                         buttonColor:
                                             Colors.black ?? Color(0xEE075E55),
                                         text: "Send OTP",
@@ -110,6 +109,12 @@ class _OtpPageState extends State<OtpPage> {
                                         },
                                       ),
                           ),
+                          smsSent
+                              ? Text(
+                                  "OTP sent to $phone",
+                                  style: TextStyle(color: Colors.grey),
+                                )
+                              : Container(),
                           smsSent
                               ? TextFormField(
                                   textAlign: TextAlign.center,
@@ -127,7 +132,7 @@ class _OtpPageState extends State<OtpPage> {
                           ),
                           smsSent
                               ? Buttons(
-                                icon: Icons.verified_user,
+                                  icon: Icons.verified_user,
                                   buttonColor:
                                       Colors.black ?? Color(0xEE075E55),
                                   text: "Verify OTP",
